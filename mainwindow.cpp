@@ -8,10 +8,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     Mass_RGB RGB;
-    uchar mas[256];
-    for(int i = 0 ; i<256;i++)
-    mas[i] = i;
-    RGB.MassiveStreamLine(100,100, mas);
+    uchar mas[2000];
+    for(int j = 0, i = 0; j<2000; i++,j++){
+    if (i > 257)
+    i = 0;
+    mas[j] = i;
+    }
+    RGB.MassiveStreamLine(200,200, mas);
     int i;
     RGB.img->save("filename.png", "PNG");
 
