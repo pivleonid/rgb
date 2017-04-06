@@ -16,7 +16,7 @@ qDebug()<< "количество отображаемых точек меньш�
 //mass_vector.clear();
 //for(int i = 0; i < x*y; i++)
 //mass_vector.append(i); //вектор заполнен
-img = new QImage(mass, y, x, x , QImage::Format_Indexed8);
+img = new QImage(mass, x, y,  QImage::Format_Indexed8);
 //QImage img1(mass, x, y, QImage::Format_Indexed8);
 
 
