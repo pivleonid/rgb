@@ -12,20 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    Mass_RGB RGB;
-    uchar mas[200000];
-    for(int j = 0, i = 0; j<200000; i++,j++){
-    if (i > 255)
-    i = 0;
-    mas[j] = i;
-    }
-    RGB.MassiveStreamLine(10,200, mas);
-    int i;
-    RGB.img->save("filename.png", "PNG");
+connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
 
-    QPixmap *pixmap = new QPixmap;
-    pixmap->load("filename.png");
-    ui->label->setPixmap(*pixmap);
+
    // ui->label->setPixmap(QPixmap::fromImage(*RGB.img));
 
 
@@ -195,6 +184,7 @@ QString a;
 
     }
 
+    ui->textEdit->setText(QString(data));
 //    foreach( v_found,list_data){
 //       // QList<QString> it = qFind(list_data.begin(),list_data.end, "v ");
 //       if(v_found == list_data.begin())
@@ -202,30 +192,35 @@ QString a;
 //    }
 
   //  qDebug() << QString(data);
-    ui->textEdit->setText(QString(data));
-//
-connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 void MainWindow::buttonClicked(){
-Mass_RGB RGB;
-uchar mas[1000000];
-    for(int j = 0, i = 0; j < 1000000; i++,j++){
-    if (i > 255)
-    i = 0;
-    mas[j] = i;
-    }
+
 QString line1 = ui->lineEdit->text();
 QString line2 = ui->lineEdit_2->text();
-RGB.MassiveStreamLine(line1.toInt(),line2.toInt(), mas);
-RGB.img->save("filename.png", "PNG");
-
-QPixmap *pixmap = new QPixmap;
-pixmap->load("filename.png");
-ui->label->setPixmap(*pixmap);
+int size_mas = (line1.toInt())* (line2.toInt());
+uchar* mas = new uchar [size_mas];
+//QVector <uchar> mas_ushar;
+//for(int i = 0; i < size_mas; i++)
+//     mas_ushar.push_back(qrand()%256);
+    for(int j = 0, i = 0; j < size_mas; i++,j++){
+    if (i > 255)
+   i = 0;
+   mas[j] = qrand()%255;
+//    mas[j] = qrand()%255;
+    }
+QImage img(mas, line1.toInt(), line2.toInt(),  QImage::Format_Indexed8);
+//qpixmap  в роли промежуточного буфера
+QPixmap *pixmap = new QPixmap(QPixmap::fromImage(img));
+QPalette pal;
+    pal.setBrush( ui->widget->backgroundRole(),QBrush(*pixmap));
+   ui->widget->resize(pixmap->width(),pixmap->height());
+     ui->widget->setPalette(pal);
+     ui->widget->setAutoFillBackground(true);
+     pixmap->save("filename.png", "PNG");
+    // img.save("filename.png", "PNG");
 }

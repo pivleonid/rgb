@@ -10,9 +10,8 @@ Mass_RGB::Mass_RGB(QObject *parent):QObject(parent)
 
 void Mass_RGB::MassiveStreamLine(int x, int y, uchar* mass){
 
-int size_mass = sizeof(mass)/sizeof(mass[0]);
-if (size_mass > x * y)
-qDebug()<< "количество отображаемых точек меньше переданных";
+//if (size_mass > x * y)
+//qDebug()<< "количество отображаемых точек меньше переданных";
 //mass_vector.clear();
 //for(int i = 0; i < x*y; i++)
 //mass_vector.append(i); //вектор заполнен

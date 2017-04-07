@@ -32,7 +32,6 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QLabel *label;
     QTextEdit *textEdit;
     QPushButton *pushButton;
     QWidget *layoutWidget;
@@ -44,6 +43,7 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *label_3;
     QLineEdit *lineEdit_2;
+    QWidget *widget;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -55,9 +55,6 @@ public:
         MainWindow->resize(657, 585);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(30, 20, 361, 141));
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QStringLiteral("textEdit"));
         textEdit->setGeometry(QRect(30, 180, 601, 351));
@@ -109,6 +106,9 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_2);
 
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(30, 10, 181, 121));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -129,7 +129,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "\320\237\320\276\321\201\321\202\321\200\320\276\320\265\320\275\320\270\320\265", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWindow", "\320\240\320\260\320\267\320\274\320\265\321\200 \320\272\320\260\321\200\321\202\320\270\320\275\320\272\320\270", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "X:", Q_NULLPTR));
