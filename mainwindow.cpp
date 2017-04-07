@@ -12,9 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    scene = new QGraphicsScene(this);
+    ui->graphicsView->setScene(scene);
 connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(buttonClicked()));
-
-
+connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(ZoomIn()));
+connect(ui->pushButton_3, SIGNAL(clicked(bool)), this, SLOT(ZoomOut()));
    // ui->label->setPixmap(QPixmap::fromImage(*RGB.img));
 
 
@@ -184,7 +186,7 @@ QString a;
 
     }
 
-    ui->textEdit->setText(QString(data));
+    //ui->textEdit->setText(QString(data));
 //    foreach( v_found,list_data){
 //       // QList<QString> it = qFind(list_data.begin(),list_data.end, "v ");
 //       if(v_found == list_data.begin())
@@ -215,12 +217,23 @@ uchar* mas = new uchar [size_mas];
     }
 QImage img(mas, line1.toInt(), line2.toInt(),  QImage::Format_Indexed8);
 //qpixmap  в роли промежуточного буфера
-QPixmap *pixmap = new QPixmap(QPixmap::fromImage(img));
-QPalette pal;
-    pal.setBrush( ui->widget->backgroundRole(),QBrush(*pixmap));
-   ui->widget->resize(pixmap->width(),pixmap->height());
-     ui->widget->setPalette(pal);
-     ui->widget->setAutoFillBackground(true);
-     pixmap->save("filename.png", "PNG");
-    // img.save("filename.png", "PNG");
+ QPixmap *pixmap = new QPixmap(QPixmap::fromImage(img));
+ scene->addPixmap(QPixmap::fromImage(img));
+   pixmap->save("filename.png", "PNG");
 }
+
+    void MainWindow::ZoomIn()
+    {
+     ui->graphicsView->scale(1.1, 1.1);
+    }
+
+    void  MainWindow::ZoomOut()
+    {
+        ui->graphicsView->scale(1 / 1.1, 1 / 1.1);
+    }
+void MainWindow::mousePressEvent(QGraphicsSceneMouseEvent* pe)
+    {
+
+int a;
+a++;
+    }
