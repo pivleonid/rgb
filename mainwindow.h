@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QWheelEvent>
 namespace Ui {
 class MainWindow;
 }
@@ -22,7 +23,7 @@ public slots:
 void buttonClicked();
 void ZoomIn();
 void ZoomOut();
- virtual void mousePressEvent(QGraphicsSceneMouseEvent* pe);
+virtual void wheelEvent(QWheelEvent* events);
 public:
 QGraphicsScene *scene;
 };

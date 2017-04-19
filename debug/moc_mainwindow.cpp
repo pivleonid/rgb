@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[8];
-    char stringdata0[86];
+    char stringdata0[72];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,14 +36,13 @@ QT_MOC_LITERAL(1, 11, 13), // "buttonClicked"
 QT_MOC_LITERAL(2, 25, 0), // ""
 QT_MOC_LITERAL(3, 26, 6), // "ZoomIn"
 QT_MOC_LITERAL(4, 33, 7), // "ZoomOut"
-QT_MOC_LITERAL(5, 41, 15), // "mousePressEvent"
-QT_MOC_LITERAL(6, 57, 25), // "QGraphicsSceneMouseEvent*"
-QT_MOC_LITERAL(7, 83, 2) // "pe"
+QT_MOC_LITERAL(5, 41, 10), // "wheelEvent"
+QT_MOC_LITERAL(6, 52, 12), // "QWheelEvent*"
+QT_MOC_LITERAL(7, 65, 6) // "events"
 
     },
     "MainWindow\0buttonClicked\0\0ZoomIn\0"
-    "ZoomOut\0mousePressEvent\0"
-    "QGraphicsSceneMouseEvent*\0pe"
+    "ZoomOut\0wheelEvent\0QWheelEvent*\0events"
 };
 #undef QT_MOC_LITERAL
 
@@ -84,7 +83,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->buttonClicked(); break;
         case 1: _t->ZoomIn(); break;
         case 2: _t->ZoomOut(); break;
-        case 3: _t->mousePressEvent((*reinterpret_cast< QGraphicsSceneMouseEvent*(*)>(_a[1]))); break;
+        case 3: _t->wheelEvent((*reinterpret_cast< QWheelEvent*(*)>(_a[1]))); break;
         default: ;
         }
     }
