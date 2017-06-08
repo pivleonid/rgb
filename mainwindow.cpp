@@ -6,12 +6,7 @@
 #include <QFile>
 #include <QFileInfo>
 
-//прототипы функций
- uint32_t*  Resampling(uint32_t* data_Fin, /*Входной массив*/
-                       uint32_t n_in,      /*Размерность массива*/
-                       uint32_t F_in,      /*Частота дискретизации интерполяции входного массива*/
-                       uint32_t F_out);    /*частота передискритизации*/
-uint32_t   linear(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t x);
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -50,21 +45,84 @@ void MainWindow::buttonClicked(){
 QString line1 = ui->lineEdit->text();
 QString line2 = ui->lineEdit_2->text();
 int size_mas = (line1.toInt())* (line2.toInt());
-uchar* mas = new uchar [size_mas];
-//QVector <uchar> mas_ushar;
-//for(int i = 0; i < size_mas; i++)
-//     mas_ushar.push_back(qrand()%256);
+
+//uchar* mas = new uchar [size_mas];
+uchar mas[size_mas]; // заменить на new
     for(int j = 0, i = 0; j < size_mas; i++,j++){
     if (i > 255)
    i = 0;
-   mas[j] = qrand()%255;
-//    mas[j] = qrand()%255;
+   mas[j] = ((rand()%255)+(rand()%255)+(rand()%255)+(rand()%255)+(rand()%255))/5;
     }
-QImage img(mas, line1.toInt(), line2.toInt(),  QImage::Format_Indexed8);
-//qpixmap  в роли промежуточного буфера
- QPixmap *pixmap = new QPixmap(QPixmap::fromImage(img));
- scene->addPixmap(QPixmap::fromImage(img));
-   pixmap->save("filename.png", "PNG");
+
+    ///
+
+   int hist[256];// массив гистограммы
+
+   ///
+   uchar b[256];
+    for (int i = 0; i < 256; i++)
+        b[i] = i;
+    ///
+    int cont = 0;
+    for(int j = 0; j < 257; j++){
+    hist[j-1] = cont;
+    cont = 0;
+        for(int i = 0; i < size_mas; i++){
+            if(mas[i] == b[j])
+                cont++;
+
+        }
+    }
+
+    ///задание порога
+
+    double porog = 2;
+     int max_hist = 0;
+    for(int i = 0; i < 256; i++){
+        if(hist[i] > max_hist){
+            max_hist = hist[i];
+            }
+    }
+    porog = porog * max_hist;
+
+    ///Определяю пороговые индексы Kmin и Kmax
+
+    bool flagPorogMin = false;
+    bool flagPorogMax = false;
+    QVector<int> VecPorogMin, VecPorogMax;
+    for(int i = 0; i < 255; i++){
+        if(flagPorogMin == false){
+            if(hist[i] < porog)
+             VecPorogMin.append(i);
+             else flagPorogMin = true;
+        }
+        if(flagPorogMax == false){
+            if(hist[255 - i] < porog)
+             VecPorogMax.append(255 - i);
+             else flagPorogMax = true;
+        }
+     }
+     ///Пробегаюсь по массиву, ищу совпадение  с векторами
+     /// Если словпадение есть, то заменяю значение на 0 или на max
+    for(int i = 0; i < size_mas; i++){
+    if(VecPorogMin.indexOf(mas[i]) >= 0)
+        mas[i] = 0;
+    if(VecPorogMax.indexOf(mas[i]) >= 0)
+        mas[i] = 255;
+    }
+
+
+
+
+
+
+//
+    QImage img(mas, line1.toInt(), line2.toInt(),  QImage::Format_Indexed8);
+
+    //qpixmap  в роли промежуточного буфера
+    QPixmap *pixmap = new QPixmap(QPixmap::fromImage(img));
+    scene->addPixmap(QPixmap::fromImage(img));
+    pixmap->save("filename.png", "PNG");
 }
 
     void MainWindow::ZoomIn(){
@@ -84,21 +142,6 @@ void MainWindow::wheelEvent(QWheelEvent* events) {
     }
 }
 
- uint32_t data_Fout[10000000];
- //uint32_t* data_Fin[]
- uint32_t* Resampling(uint32_t* data_Fin, uint32_t n_in, uint32_t F_in, uint32_t F_out){
-     uint32_t j = 0;
-     for(uint32_t i = 0; i < n_in; i++, F_in += F_in)
-         for( ; F_in > F_out; j++, F_out += F_out){
-             data_Fout[j] = linear(i * F_in, data_Fin[i], (i++)* F_in, data_Fin[++i], j*F_out );
-         }
-
-     return data_Fout;
- }
 
 
-uint32_t linear(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t x){
-    uint32_t y = y1 + (y2 - y1)*(x - x1)/(x2 - x1);
-    return y;
 
-}

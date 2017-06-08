@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
@@ -43,6 +44,8 @@ public:
     QLineEdit *lineEdit_2;
     QLabel *label_2;
     QLineEdit *lineEdit;
+    QLabel *label_8;
+    QDoubleSpinBox *doubleSpinBox;
     QSpacerItem *verticalSpacer_2;
     QLabel *label_7;
     QPushButton *pushButton;
@@ -131,6 +134,21 @@ public:
 
         verticalLayout->addLayout(formLayout);
 
+        label_8 = new QLabel(centralWidget);
+        label_8->setObjectName(QStringLiteral("label_8"));
+        label_8->setEnabled(true);
+        sizePolicy.setHeightForWidth(label_8->sizePolicy().hasHeightForWidth());
+        label_8->setSizePolicy(sizePolicy);
+        label_8->setMaximumSize(QSize(200, 16777215));
+        label_8->setFont(font);
+
+        verticalLayout->addWidget(label_8);
+
+        doubleSpinBox = new QDoubleSpinBox(centralWidget);
+        doubleSpinBox->setObjectName(QStringLiteral("doubleSpinBox"));
+
+        verticalLayout->addWidget(doubleSpinBox);
+
         verticalSpacer_2 = new QSpacerItem(85, 78, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer_2);
@@ -203,6 +221,7 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "Y:", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "X:", Q_NULLPTR));
         lineEdit->setText(QString());
+        label_8->setText(QApplication::translate("MainWindow", "\320\232\320\276\320\275\321\202\321\200\320\260\321\201\321\202\320\275\320\276\321\201\321\202\321\214", Q_NULLPTR));
         label_7->setText(QApplication::translate("MainWindow", "\320\227\321\203\320\274", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "\320\237\320\276\321\201\321\202\321\200\320\276\320\265\320\275\320\270\320\265", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "+", Q_NULLPTR));
